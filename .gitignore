@@ -1,0 +1,5 @@
+*.swp
+cookbooks/*
+tmp/*
+.vagrant
+

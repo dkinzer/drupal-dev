@@ -1,0 +1,43 @@
+webroot="/var/www/html/drupaldelphia";
+web="$webroot/all/modules";
+vim="~/.vim";
+db_su_pw='<%= @db_su_pw %>'
+account_name='<%= @account_name %>'
+account_pass='<%= @account_pass %>'
+GIT_EDITOR=/usr/local/bin/vim
+ 
+export web;
+export vim;
+export webroot;
+export db_su_pw
+export account_name
+export account_pass
+export GIT_EDITOR
+ 
+source /usr/local/src/drush/drush.complete.sh
+source /usr/share/doc/git-1.7.1/contrib/completion/git-completion.bash
+ 
+# User specific aliases and functions
+alias web="cd /var/www/html/drupaldelphia"
+alias ll="ls -laH"
+alias vim="/usr/local/bin/vim"
+alias gb="git branch"
+alias gs="git status"
+alias vv="cd $vim"
+alias cdb="cd $web"
+alias cdbroot="cd $webroot"
+alias phing="phing -find build.xml"
+alias drush="/usr/local/src/drush/drush"
+ 
+#load local machine path aliases
+test -s ~/.localrc && . ~/.localrc || true
+ 
+set completion-ignore-case on
+set completion-prefix-display-length 3
+ 
+ 
+RED="\[\033[0;31m\]"
+BLUE="\[\033[1;36m\]"
+DEFAULT="\[\033[0m\]"
+ 
+PS1="$BLUE\h -> \W $RED\$(__git_ps1 '(%s)') $DEFAULT\$ "

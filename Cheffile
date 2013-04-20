@@ -1,0 +1,36 @@
+site 'http://community.opscode.com/api/v1'
+
+# cookbook 'chef-client'
+cookbook 'yum'
+cookbook 'users'
+cookbook 'sudo'
+cookbook 'git'
+cookbook 'mercurial'
+cookbook 'vim',
+  :git => 'https://github.com/jenkinslaw/vim',
+  :ref => 'b10500e606c33504e8d814ced9b24b4629508f5d'
+  #:path => '~/projects/vim'
+cookbook 'postfix'
+cookbook 'apache2', '>= 1.1.0'
+cookbook 'php', '>= 1.1.8',
+  :git => 'https://github.com/opscode-cookbooks/php'
+cookbook 'percona-install'
+cookbook 'memcached', '>=1.0.0'
+cookbook 'cron'
+cookbook 'iptables'
+cookbook 'drush',
+  :git => 'https://github.com/msonnabaum/chef-drush.git'
+cookbook 'drupal',
+  :git => 'https://github.com/jenkinslaw/drupal-cookbook',
+  :ref => 'merged-custom-fixes'
+  #:path => '~/drupal-cookbook'
+cookbook 'phantomjs',
+  :git => 'https://github.com/jenkinslaw/phantomjs'
+cookbook 'casperjs',
+  :git => 'https://github.com/jenkinslaw/casperjs-cookbook'
+cookbook 'phing',
+  :git => 'https://github.com/jenkinslaw/phing-cookbook'
+
+# Optional
+cookbook 'varnish'
+cookbook 'solr'

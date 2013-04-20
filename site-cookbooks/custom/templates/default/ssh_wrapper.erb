@@ -1,0 +1,3 @@
+#!/bin/bash
+ssh -i<%= @key_path %> -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $1 $2
+
