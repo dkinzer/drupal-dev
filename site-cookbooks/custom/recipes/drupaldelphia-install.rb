@@ -27,7 +27,7 @@ db_user     = node['drupal']['db']['user']
 db_password = node['drupal']['db']['password']
 db_host     = node['drupal']['db']['host']
 
-dev_user   = node['drupaldelphia']['user']
+dev_user   = node['dev']['user']
 drupaldelphia_source = node['drupaldelphia']['source']['repo']
 drupaldelphia_ref = node['drupaldelphia']['source']['ref']
 
