@@ -7,7 +7,6 @@ SITE
     chef_handler (1.1.4)
     cron (1.2.2)
     dmg (1.1.0)
-    firewall (0.10.2)
     git (2.5.0)
       build-essential (>= 0.0.0)
       dmg (>= 0.0.0)
@@ -58,21 +57,6 @@ GIT
       phantomjs (>= 0.0.0)
 
 GIT
-  remote: https://github.com/jenkinslaw/drupal-cookbook
-  ref: merged-custom-fixes
-  sha: 093539631c8dd905273bb9d053b77e73cb867ce9
-  specs:
-    drupal (1.1.1)
-      apache2 (>= 0.0.0)
-      cron (>= 0.0.0)
-      firewall (>= 0.0.0)
-      iptables (>= 0.0.0)
-      mysql (>= 0.0.0)
-      openssl (>= 0.0.0)
-      php (>= 0.0.0)
-      postfix (>= 0.0.0)
-
-GIT
   remote: https://github.com/jenkinslaw/phantomjs
   ref: master
   sha: c4d60c57adf4fddadb74e01daa9908df49e99912
@@ -117,7 +101,6 @@ DEPENDENCIES
   apache2 (>= 1.1.0)
   casperjs (>= 0)
   cron (>= 0)
-  drupal (>= 0)
   drush (>= 0)
   git (>= 0)
   iptables (>= 0)
