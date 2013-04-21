@@ -2,9 +2,6 @@ name 'drupal'
 description 'Drupal Role'
 
 override_attributes(
-  "vim" => {
-    "install_method" => 'source',
-  },
   'drupal' => {
     'site' => {
       'admin' => 'admin',

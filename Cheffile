@@ -20,10 +20,6 @@ cookbook 'cron'
 cookbook 'iptables'
 cookbook 'drush',
   :git => 'https://github.com/msonnabaum/chef-drush.git'
-cookbook 'drupal',
-  :git => 'https://github.com/jenkinslaw/drupal-cookbook',
-  :ref => 'merged-custom-fixes'
-  #:path => '~/drupal-cookbook'
 cookbook 'phantomjs',
   :git => 'https://github.com/jenkinslaw/phantomjs'
 cookbook 'casperjs',

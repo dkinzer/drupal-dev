@@ -27,41 +27,34 @@ db_user     = node['drupal']['db']['user']
 db_password = node['drupal']['db']['password']
 db_host     = node['drupal']['db']['host']
 
-drupaldelphia_user   = node['drupaldelphia']['user']
+dev_user   = node['drupaldelphia']['user']
 drupaldelphia_source = node['drupaldelphia']['source']['repo']
-source_ref = node['drupaldelphia']['source']['ref']
-
-# We need to delete the sites folder unles it's a repo.
-directory "#{drupal_dir}/sites" do
-  action :delete
-  recursive true
-  not_if { File.exists? "#{drupal_dir}/sites/.git" }
-end 
+drupaldelphia_ref = node['drupaldelphia']['source']['ref']
 
 # If the drupal site is owned by root it's that much harder to work with it.
 directory drupal_dir do
-  owner drupaldelphia_user
-  group drupaldelphia_user
+  owner dev_user
+  group dev_user
   mode 0755
   recursive true
 end
 
 # We'll need to wrap our ssh command in order to pull a private repo.
-template "/home/#{drupaldelphia_user}/.ssh/ssh_wrapper.sh" do
-  owner drupaldelphia_user
-  group drupaldelphia_user
+template "/home/#{dev_user}/.ssh/ssh_wrapper.sh" do
+  owner dev_user
+  group dev_user
   source "ssh_wrapper.erb"
   mode "0700"
-  variables 'key_path' => "/home/#{drupaldelphia_user}/.ssh/id_rsa"
+  variables 'key_path' => "/home/#{dev_user}/.ssh/id_rsa"
 end
 
 # Clone our drupal sites folder.
 git "#{drupal_dir}" do
-  user       drupaldelphia_user
+  user       dev_user
   repository drupaldelphia_source
-  reference  source_ref
+  reference  drupaldelphia_ref
   action     :checkout
-  ssh_wrapper "/home/#{drupaldelphia_user}/.ssh/ssh_wrapper.sh"
+  ssh_wrapper "/home/#{dev_user}/.ssh/ssh_wrapper.sh"
 
   enable_submodules true
   action :sync
@@ -69,8 +62,8 @@ end
 
 # Add our custom config file.
 template "#{drupal_dir}/sites/default/settings.php" do
-  owner drupaldelphia_user
-  group drupaldelphia_user
+  owner dev_user
+  group dev_user
   source "#{drupal_version}.settings.php.erb"
   mode "0644"
   variables(
@@ -83,7 +76,7 @@ end
 
 # The files directory needs to be writable by apache.
 directory "#{drupal_dir}/sites/default/files" do
-  owner drupal_user
+  owner dev_user
   group 'apache'
   mode 0775
   recursive true
@@ -92,7 +85,7 @@ end
 # Run the phing task to rebuild the site.
 bash "Site-Rebuild" do
   cwd "#{drupal_dir}"
-  user drupaldelphia_user
+  user dev_user
   code <<-EOF
     (phing reset-site)
   EOF
@@ -113,7 +106,7 @@ bash "Site-Rebuild" do
   code <<-EOF
     (ln -fvs #{drupal_dir}/sites/all/modules/contrib/coder/coder_sniffer/Drupal $(pear config-get php_dir)/PHP/CodeSniffer/Standards)
     cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards
-    chown #{drupaldelphia_user}:#{drupaldelphia_user} Drupal
+    chown #{dev_user}:#{dev_user} Drupal
   EOF
 end
 
