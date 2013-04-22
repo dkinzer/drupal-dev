@@ -10,7 +10,7 @@ override_attributes(
   },
   "drupal" => {
     "db" => {"password" => "drupalpass"},
-    "dir" => "/var/www/html/cdb",
+    "dir" => "/var/www/html/drupaldelphia",
   },
   "drush" => {
     "install_method" => "git",

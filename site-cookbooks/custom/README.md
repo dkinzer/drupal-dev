@@ -1,6 +1,6 @@
 custom Cookbook
 ===============
-We'll add any custom recipes here for the CDB kitchen when it is inconvinient to use an available recipe.
+We'll add any custom recipes here for the Drupaldelphia kitchen when it is inconvinient to use an available recipe.
 
 Requirements
 ------------
@@ -20,19 +20,19 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['cdb']['user']</tt></td>
+    <td><tt>['dev']['user']</tt></td>
     <th>String</th>
     <td>Owner of drupal sites folder</td>
     <td><tt>vagrant</tt></td>
   </tr>
   <tr>
-    <td><tt>['cdb']['source']['repo']</tt></td>
+    <td><tt>['drupaldelphia']['source']['repo']</tt></td>
     <th>String</th>
-    <td>Location of the cdb repository</td>
-    <td><tt>git@github.com:jenkinslaw/cdb.git</tt></td>
+    <td>Location of the drupaldelphia repository</td>
+    <td><tt>git@github.com:dkinzer/drupaldelphia.git</tt></td>
   </tr>
   <tr>
-    <td><tt>['cdb']['source']['ref']</tt></td>
+    <td><tt>['drupaldelphia']['source']['ref']</tt></td>
     <th>String</th>
     <td>References the branch of the repository</td>
     <td><tt>master</tt></td>
