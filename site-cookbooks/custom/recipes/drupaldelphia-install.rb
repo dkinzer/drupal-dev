@@ -53,9 +53,17 @@ file "/home/#{dev_user}/.ssh/id_rsa" do
   mode "0600"
 end
 
+# Remove non git version of site.
+directory "#{drupal_dir}" do
+  action :delete
+  recursive true
+  not_if do
+    File.exists?("#{drupal_dir}/.git")
+  end
+end
+
 # Clone our drupal sites folder.
 git "#{drupal_dir}" do
-  user       dev_user
   repository drupaldelphia_source
   reference  drupaldelphia_ref
   action     :checkout
@@ -65,8 +73,18 @@ git "#{drupal_dir}" do
   action :sync
 end
 
+# Make sure direcotry is owned by vagrant user.
+directory "#{drupal_dir}" do
+  owner dev_user
+  group dev_user
+end
+
+
 # Add phing buld file.
 cookbook_file "build.xml" do
+  owner dev_user
+  group dev_user
+  mode 0644
   path "#{drupal_dir}/build.xml"
 end
 
