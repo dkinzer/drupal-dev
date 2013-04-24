@@ -65,6 +65,11 @@ git "#{drupal_dir}" do
   action :sync
 end
 
+# Add phing buld file.
+cookbook_file "build.xml" do
+  path "#{drupal_dir}/build.xml"
+end
+
 # Add our custom config file.
 template "#{drupal_dir}/sites/default/settings.php" do
   owner dev_user
