@@ -32,8 +32,7 @@ default_attributes(
 )
 
 run_list(
-  "role[apache2]",
-  "role[memcached]",
+  "recipe[drupal]",
   "recipe[vim]"
 )
 

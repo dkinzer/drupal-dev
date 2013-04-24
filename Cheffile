@@ -1,6 +1,9 @@
 site 'http://community.opscode.com/api/v1'
 
 # cookbook 'chef-client'
+cookbook 'drupal',
+  :git => 'https://github.com/jenkinslaw/drupal-cookbook',
+  :ref => 'merged-custom-fixes'
 cookbook 'yum'
 cookbook 'users'
 cookbook 'sudo'
