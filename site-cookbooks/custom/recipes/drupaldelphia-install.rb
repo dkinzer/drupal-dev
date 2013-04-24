@@ -48,6 +48,11 @@ template "/home/#{dev_user}/.ssh/ssh_wrapper.sh" do
   variables 'key_path' => "/home/#{dev_user}/.ssh/id_rsa"
 end
 
+# Make sure that the private key is private.
+file "/home/#{dev_user}/.ssh/id_rsa" do
+  mode "0600"
+end
+
 # Clone our drupal sites folder.
 git "#{drupal_dir}" do
   user       dev_user
