@@ -1,4 +1,4 @@
-<project name="cdb" default="deploy" description="Customer Database Phing Build Procedures">
+<project name="website" default="deploy" description="Website Phing Build Procedures">
 
   <property name="simpletest.results" value="results/simpletest" />
   <property environment="env"/>
@@ -17,7 +17,7 @@
   <target name="en-dev">
     <phingcall target='set-dev-defaults' />
     <phingcall target='create-dev-users' />
-    <exec  command="drush --yes en cdb_dev"  />
+    <exec  command="drush --yes en website_dev"  />
     <exec  command="drush --yes perm-grant 'Authenticated User' 'access devel'" />
     <exec  command="drush --yes perm-grant 'Annonymous User' 'access devel'" />
     <phingcall target='dis-caches' />
@@ -28,11 +28,6 @@
   </target>
 
   <target name='create-dev-users'>
-    <exec command="drush --yes user-create company-administrator \
-      --password='${env.account_pass}' \ 
-      --mail='webmaster+CDBCompanyAdminRoleUser@jenkinslaw.org'" />
-    <exec command="drush --yes user-add-role 'Company Administrator' \
-      --name=company-administrator" />
   </target>
   <target name='dis-caches'>
     <exec command="drush vset cache 0" />
@@ -42,8 +37,8 @@
 
   <target name="dis-dev">
     <exec  command="drush --yes dis devel simpletest devel_themer coder"  />
-    <exec  command="drush --yes perm-revoke 'Authenticated User' 'access devel'" />
-    <exec  command="drush --yes perm-revole 'Annonymous User' 'access devel'" />
+    <exec  command="drush --yes perm-revoke 'authenticated user' 'access devel'" />
+    <exec  command="drush --yes perm-revole 'annonymous user' 'access devel'" />
   </target>
 
   <target name='clear-caches'>
@@ -51,8 +46,7 @@
   </target>
 
   <target name="test-run">
-    <exec command="drush test-run --uri=${drush.uri} Cdb --xml='sites/${simpletest.results}' " />
-    <exec command="casperjs test --url=${drush.uri} --xunit='results/casper/results.xml' --ignore-ssl-errors='yes' --casperIncludes='all/modules/jenkins/tests/casper-includes' --includes='all/modules/jenkins/tests/casper-includes/Eval.js'  all/modules/jenkins/tests/casper" />
+    <exec command="drush test-run --uri=${drush.uri} website --xml='sites/${simpletest.results}' " />
   </target>
 
   <target name="reset-site">
@@ -66,12 +60,12 @@
         <fail message="${env.db_su_pw} ${env.account_name} ${env.account_pass} The environment variables $db_su_pw, $account_name, $account_pass must all be set."/>
       </then>
       <else>
-        <chmod file="default/settings.php" mode="0644" />
-        <exec command="drush --yes site-install jenkins_cdb \
+        <chmod file="sites/default/settings.php" mode="0644" />
+        <exec command="drush --yes site-install jenkins_website \
           --db-su-pw=${env.db_su_pw} \
           --account-name=${env.account_name} \
           --account-pass=${env.account_pass}" />
-        <exec command="drush --yes en cdb_dev" />
+        <exec command="drush --yes en website_dev" />
         <exec command="drush --yes test-run Jenkins" />
       </else>
     </if>
@@ -83,13 +77,7 @@
   </target>
 
   <target name="update-core">
-    <delete file="${project.basedir}/../profiles/jenkins_cdb" />
-    <copy todir="${project.basedir}/../profiles/jenkins_cdb" >
-      <fileset dir="${project.basedir}/default/profiles/jenkins_cdb" includes="*" />
-    </copy>
     <exec command="drush --yes up drupal" />
-    <delete dir="${project.basedir}/../profiles/jenkins_cdb" />
-    <exec command="ln -s ${project.basedir}/default/profiles/jenkins_cdb ${project.basedir}/../profiles/jenkins_cdb" />
   </target>
 
 </project>

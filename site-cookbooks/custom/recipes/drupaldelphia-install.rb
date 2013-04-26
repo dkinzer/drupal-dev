@@ -110,11 +110,26 @@ directory "#{drupal_dir}/sites/default/files" do
   recursive true
 end
 
+# Create parent directory for our dev module.
+directory "#{drupal_dir}/sites/all/modules/dev" do
+  action :create
+end
+
+# Add phing buld file.
+cookbook_file "dev.info" do
+  owner dev_user
+  group dev_user
+  mode 0755
+  path "#{drupal_dir}/sites/all/modules/dev/dev.info"
+end
+
 # Run the phing task to rebuild the site.
-bash "Site-Rebuild" do
+bash "Rebuild Site" do
   cwd "#{drupal_dir}"
   user dev_user
   code <<-EOF
+    (drush --yes dl coder devel devel_themer)
+    (drush --yes en dev)
     (phing reset-site)
   EOF
 end
@@ -129,8 +144,8 @@ else
 end
 
 # Drupal linting requres that we link the Drupal standard.
-bash "Site-Rebuild" do
-  cwd "#{drupal_dir}/sites"
+bash "Enable Linting" do
+  cwd "#{drupal_dir}"
   code <<-EOF
     (ln -fvs #{drupal_dir}/sites/all/modules/contrib/coder/coder_sniffer/Drupal $(pear config-get php_dir)/PHP/CodeSniffer/Standards)
     cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards
