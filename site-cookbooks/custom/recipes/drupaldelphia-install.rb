@@ -90,7 +90,7 @@ end
 # The files directory needs to be writable by apache.
 directory "#{drupal_dir}/sites/default/files" do
   owner dev_user
-  group dev_user
+  group "wwww"
   mode 0775
   recursive true
 end
