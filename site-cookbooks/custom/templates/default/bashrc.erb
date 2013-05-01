@@ -1,5 +1,5 @@
 webroot="/var/www/html/drupaldelphia";
-web="$webroot/all/modules";
+web="$webroot/sites/all/modules";
 vim="~/.vim";
 db_su_pw='<%= @db_su_pw %>'
 account_name='<%= @account_name %>'
@@ -18,7 +18,6 @@ source /usr/local/src/drush/drush.complete.sh
 source /usr/share/doc/git-1.7.1/contrib/completion/git-completion.bash
  
 # User specific aliases and functions
-alias web="cd /var/www/html/drupaldelphia"
 alias ll="ls -laH"
 alias gb="git branch"
 alias gs="git status"
