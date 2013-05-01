@@ -31,14 +31,6 @@ dev_user   = node['dev']['user']
 drupaldelphia_source = node['drupaldelphia']['source']['repo']
 drupaldelphia_ref = node['drupaldelphia']['source']['ref']
 
-# If the drupal site is owned by root it's that much harder to work with it.
-directory drupal_dir do
-  owner dev_user
-  group dev_user
-  mode 0755
-  recursive true
-end
-
 # We'll need to wrap our ssh command in order to pull a private repo.
 template "/home/#{dev_user}/.ssh/ssh_wrapper.sh" do
   owner dev_user
@@ -73,13 +65,6 @@ git "#{drupal_dir}" do
   action :sync
 end
 
-# Make sure direcotry is owned by vagrant user.
-directory "#{drupal_dir}" do
-  owner dev_user
-  group dev_user
-end
-
-
 # Add phing buld file.
 cookbook_file "build.xml" do
   owner dev_user
@@ -105,32 +90,19 @@ end
 # The files directory needs to be writable by apache.
 directory "#{drupal_dir}/sites/default/files" do
   owner dev_user
-  group 'apache'
+  group dev_user
   mode 0775
   recursive true
-end
-
-# Create parent directory for our dev module.
-directory "#{drupal_dir}/sites/all/modules/dev" do
-  action :create
-end
-
-# Add phing buld file.
-cookbook_file "dev.info" do
-  owner dev_user
-  group dev_user
-  mode 0755
-  path "#{drupal_dir}/sites/all/modules/dev/dev.info"
 end
 
 # Run the phing task to rebuild the site.
 bash "Rebuild Site" do
   cwd "#{drupal_dir}"
-  user dev_user
   code <<-EOF
-    (drush --yes dl coder devel devel_themer)
-    (drush --yes en dev)
-    (phing reset-site)
+    sudo chown -R #{dev_user}:#{dev_user} .
+    drush --yes dl coder devel devel_themer
+    drush --yes en coder devel devel_themer
+    phing reset-site
   EOF
 end
 
@@ -147,7 +119,7 @@ end
 bash "Enable Linting" do
   cwd "#{drupal_dir}"
   code <<-EOF
-    (ln -fvs #{drupal_dir}/sites/all/modules/contrib/coder/coder_sniffer/Drupal $(pear config-get php_dir)/PHP/CodeSniffer/Standards)
+    (sudo ln -fvs #{drupal_dir}/sites/all/modules/contrib/coder/coder_sniffer/Drupal $(pear config-get php_dir)/PHP/CodeSniffer/Standards)
     cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards
     chown #{dev_user}:#{dev_user} Drupal
   EOF
