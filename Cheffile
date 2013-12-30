@@ -10,8 +10,8 @@ cookbook 'sudo'
 cookbook 'git'
 cookbook 'mercurial'
 cookbook 'vim',
-  :git => 'https://github.com/jenkinslaw/vim',
-  :ref => 'b10500e606c33504e8d814ced9b24b4629508f5d'
+  :git => 'https://github.com/jenkinslaw/vim'
+  #:ref => 'b10500e606c33504e8d814ced9b24b4629508f5d'
   #:path => '~/projects/vim'
 cookbook 'postfix'
 cookbook 'apache2', '>= 1.1.0'
@@ -31,5 +31,5 @@ cookbook 'phing',
   :git => 'https://github.com/jenkinslaw/phing-cookbook'
 
 # Optional
-cookbook 'varnish'
-cookbook 'solr'
+# cookbook 'varnish'
+# cookbook 'solr'

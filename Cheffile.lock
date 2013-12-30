@@ -3,10 +3,10 @@ SITE
   specs:
     apache2 (1.6.2)
     build-essential (1.4.0)
-    capistrano (0.7.0)
     chef_handler (1.1.4)
     cron (1.2.2)
     dmg (1.1.0)
+    firewall (0.11.2)
     git (2.5.0)
       build-essential (>= 0.0.0)
       dmg (>= 0.0.0)
@@ -14,8 +14,6 @@ SITE
       windows (>= 0.0.0)
       yum (>= 0.0.0)
     iptables (0.12.0)
-    java (1.10.0)
-      windows (>= 0.0.0)
     memcached (1.3.0)
       runit (~> 1.0)
       yum (>= 0.0.0)
@@ -34,13 +32,8 @@ SITE
     runit (1.1.2)
       build-essential (>= 0.0.0)
       yum (>= 0.0.0)
-    solr (0.8.1)
-      capistrano (>= 0)
-      java (>= 0)
-      runit (>= 0)
     sudo (2.0.4)
     users (1.4.0)
-    varnish (0.9.4)
     windows (1.8.8)
       chef_handler (>= 0.0.0)
     xml (1.1.2)
@@ -55,6 +48,21 @@ GIT
     casperjs (0.0.1)
       git (>= 0.0.0)
       phantomjs (>= 0.0.0)
+
+GIT
+  remote: https://github.com/jenkinslaw/drupal-cookbook
+  ref: merged-custom-fixes
+  sha: 093539631c8dd905273bb9d053b77e73cb867ce9
+  specs:
+    drupal (1.1.1)
+      apache2 (>= 0.0.0)
+      cron (>= 0.0.0)
+      firewall (>= 0.0.0)
+      iptables (>= 0.0.0)
+      mysql (>= 0.0.0)
+      openssl (>= 0.0.0)
+      php (>= 0.0.0)
+      postfix (>= 0.0.0)
 
 GIT
   remote: https://github.com/jenkinslaw/phantomjs
@@ -73,11 +81,10 @@ GIT
 
 GIT
   remote: https://github.com/jenkinslaw/vim
-  ref: b10500e606c33504e8d814ced9b24b4629508f5d
-  sha: b10500e606c33504e8d814ced9b24b4629508f5d
+  ref: master
+  sha: 88e8d018267d2cd5cfa3260ce55a0025f52dae6f
   specs:
     vim (1.0.2)
-      mercurial (>= 0.0.0)
 
 GIT
   remote: https://github.com/msonnabaum/chef-drush.git
@@ -101,6 +108,7 @@ DEPENDENCIES
   apache2 (>= 1.1.0)
   casperjs (>= 0)
   cron (>= 0)
+  drupal (>= 0)
   drush (>= 0)
   git (>= 0)
   iptables (>= 0)
@@ -111,10 +119,8 @@ DEPENDENCIES
   phing (>= 0)
   php (>= 1.1.8)
   postfix (>= 0)
-  solr (>= 0)
   sudo (>= 0)
   users (>= 0)
-  varnish (>= 0)
   vim (>= 0)
   yum (>= 0)
 
